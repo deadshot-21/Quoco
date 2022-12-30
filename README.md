@@ -43,4 +43,4 @@ str_list = ['hello', 'hi', 'howdy']
 sorted_str_list = sorted(str_list, reverse=True)  # ['howdy', 'hello', 'hi']
 ```
 
-You can find me on telegram, search @quoco_bot or [click here]('https://t.me/quoco_bot')
+## You can find me on telegram, search @quoco_bot or [click here](https://t.me/quoco_bot)
