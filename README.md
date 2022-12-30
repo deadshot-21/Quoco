@@ -1,7 +1,7 @@
 # Quoco
 
 Hey explorer👋 Welcome to Quoco :))
-	
+
 Need help for anything related to coding? Here you go!
 I will be happy to help. Just type your question and see the magic ✨
 
@@ -42,3 +42,5 @@ str_list = ['hello', 'hi', 'howdy']
 
 sorted_str_list = sorted(str_list, reverse=True)  # ['howdy', 'hello', 'hi']
 ```
+
+You can find me on telegram, search @quoco_bot or [click here]('https://t.me/quoco_bot')
