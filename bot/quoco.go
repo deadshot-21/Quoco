@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 	"time"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
@@ -37,11 +38,24 @@ func InitialiseBot() {
 		if !update.Message.IsCommand() { // ignore any non-command Messages
 			fmt.Println("MESSAGE", update.Message.Text)
 
+			if strings.Contains(strings.ToLower(update.Message.Text), "code") {
+				c_question := update.Message.Text
+				c_answer, err := chat.Chat(c_question)
+				if err != nil {
+					log.Println(err)
+					msg.Text = "Error occured! Try again"
+				} else {
+					msg.Text = c_answer
+				}
+			} else {
+
+			
 			//
 			//select {
 			//case <-chat.GetDoneChan():
 			//	fmt.Println("time out/finish")
 			//}
+
 			question := "Answer in true or false. Is the following question related to computer science? " + update.Message.Text
 			log.Printf("Q: %s\n", question)
 			answer, err := chat.Chat(question)
@@ -64,6 +78,7 @@ func InitialiseBot() {
 			} else {
 				msg.Text = "Question not related to Coding!"
 			}
+		}
 
 		} else {
 
