@@ -39,6 +39,7 @@ func InitialiseBot() {
 			fmt.Println("MESSAGE", update.Message.Text)
 
 			if strings.Contains(strings.ToLower(update.Message.Text), "code") {
+				fmt.Println("MESSAGE", update.Message.Text)
 				c_question := update.Message.Text
 				c_answer, err := chat.Chat(c_question)
 				if err != nil {
@@ -76,7 +77,7 @@ func InitialiseBot() {
 					msg.Text = c_answer
 				}
 			} else {
-				msg.Text = "Question not related to Coding!"
+				msg.Text = "Question not related to Coding!\nIf you are searching for code,\ntry starting question with 'code for ...?'"
 			}
 		}
 
