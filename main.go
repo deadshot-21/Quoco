@@ -3,18 +3,23 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"os"
+	"sync"
 	"time"
 
+	"github.com/go-telegram-bot-api/controllers"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 	"github.com/solywsh/chatgpt"
 )
 
+var wg sync.WaitGroup
+
 func main() {
-
 	godotenv.Load(".env")
-
+	wg.Add(2)
 	bot, err := tgbotapi.NewBotAPI(os.Getenv("TELEGRAM_APITOKEN"))
 	if err != nil {
 		log.Panic(err)
@@ -46,7 +51,7 @@ func main() {
 			//case <-chat.GetDoneChan():
 			//	fmt.Println("time out/finish")
 			//}
-			question := "Answer in true or false. Is the following question related to computer science or coding or data structure and algorithms? " + update.Message.Text
+			question := "Answer in true or false. Is the following question related to computer science? " + update.Message.Text
 			log.Printf("Q: %s\n", question)
 			answer, err := chat.Chat(question)
 			if err != nil {
@@ -54,7 +59,9 @@ func main() {
 			}
 			log.Printf("A: %s\n", answer)
 
-			if answer[:4] == "True" {
+			if answer == "" {
+				msg.Text = "I didn't understand the question!"
+			} else if answer[:4] == "True" {
 				c_question := update.Message.Text
 				c_answer, err := chat.Chat(c_question)
 				if err != nil {
@@ -63,7 +70,6 @@ func main() {
 				} else {
 					msg.Text = c_answer
 				}
-
 			} else {
 				msg.Text = "Question not related to Coding!"
 			}
@@ -140,4 +146,12 @@ sorted_str_list = sorted(str_list, reverse=True)  # ['howdy', 'hello', 'hi']
 		}
 		defer chat.Close()
 	}
+	r := mux.NewRouter()
+	homeController := controllers.NewHomeController()
+	r.HandleFunc("/", homeController.Home).Methods("GET")
+	port := os.Getenv("PORT")
+	fmt.Println("running on port " + port)
+
+	http.ListenAndServe(":"+port, r)
+	wg.Wait()
 }

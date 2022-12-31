@@ -8,4 +8,8 @@ require (
 	github.com/solywsh/chatgpt v0.0.13
 )
 
-require github.com/sashabaranov/go-gpt3 v0.0.0-20221202105456-0f9f4aa343ad // indirect
+require (
+	github.com/gorilla/mux v1.8.0 // indirect
+	github.com/sashabaranov/go-gpt3 v0.0.0-20221202105456-0f9f4aa343ad // indirect
+	gopkg.in/mgo.v2 v2.0.0-20190816093944-a6b53ec6cb22 // indirect
+)
